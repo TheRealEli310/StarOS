@@ -75,17 +75,24 @@ namespace StarOS.System.Terminal
                     Console.WriteLine("Volume in drive 0 is " + $"{drive.VolumeLabel}");
                     Console.WriteLine("Directory of " + Kernel.CurrentVol + @":\" + Kernel.CurrentDir);
                     Console.WriteLine("\n");
-                    for (int i = 0; i < filePaths.Length; ++i)
+                    if (filePaths.Length == 0 && Directory.GetDirectories(Kernel.CurrentVol + @":\" + Kernel.CurrentDir).Length == 0)
                     {
-                        string path = filePaths[i];
-                        Console.WriteLine(Path.GetFileName(path));
+                        Console.WriteLine("File Not Found");
                     }
-                    foreach (var d in Directory.GetDirectories(Kernel.CurrentVol + @":\" + Kernel.CurrentDir))
+                    else
                     {
-                        var dir = new DirectoryInfo(d);
-                        var dirName = dir.Name;
+                        for (int i = 0; i < filePaths.Length; ++i)
+                        {
+                            string path = filePaths[i];
+                            Console.WriteLine(Path.GetFileName(path));
+                        }
+                        foreach (var d in Directory.GetDirectories(Kernel.CurrentVol + @":\" + Kernel.CurrentDir))
+                        {
+                            var dir = new DirectoryInfo(d);
+                            var dirName = dir.Name;
 
-                        Console.WriteLine(dirName + " <DIR>");
+                            Console.WriteLine(dirName + " <DIR>");
+                        }
                     }
                     Console.WriteLine("\n");
                     Console.WriteLine("        " + $"{drive.TotalSize}" + " bytes");
@@ -119,6 +126,10 @@ namespace StarOS.System.Terminal
                 case "format":
                     Console.WriteLine("Formatting...");
                     Cosmos.System.FileSystem.VFS.VFSManager.Format(args[1],"fat32",true);
+                    Console.Write("Enter volume label: ");
+                    string label = Console.ReadLine();
+                    Cosmos.System.FileSystem.VFS.VFSManager.SetFileSystemLabel(args[1],label);
+                    Console.WriteLine("Formatted.");
                     break;
                 case "":
                     break;

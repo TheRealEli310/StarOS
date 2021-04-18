@@ -23,22 +23,14 @@ namespace StarOS.System.Utils
                 }
                 else
                 {
-                    Cosmos.System.FileSystem.VFS.VFSManager.CreateFile(path);
+                    //File.Create(path);
                 }
             }
         }
 
         public void Push()
         {
-            if (File.Exists(path))
-            {
-                File.WriteAllLines(path, fileContent);
-            }
-            else
-            {
-                Cosmos.System.FileSystem.VFS.VFSManager.CreateFile(path);
-                File.WriteAllLines(path, fileContent);
-            }
+            File.WriteAllLines(path, fileContent);
         }
 
         public void PushValues()

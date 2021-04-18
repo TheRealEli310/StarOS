@@ -23,14 +23,14 @@ namespace StarOS
                 Console.WriteLine("Booting StarOS...");
                 Console.WriteLine("FS init");
                 Sys.FileSystem.VFS.VFSManager.RegisterVFS(fs);
-                Console.WriteLine("Reading settings");
+                /*Console.WriteLine("Reading settings");
                 config = new Settings(@"0:\config.sos");
                 string firstboot = config.Get("FirstBoot");
                 if (firstboot == "null")
                 {
                     config.Edit("FirstBoot", boottime);
                     config.Push();
-                }
+                }*/
                 CurrentOperation = "Shell init";
                 Console.WriteLine("Shell init");
                 Shell.BeforeRun();
